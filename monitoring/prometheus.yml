@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s       # Zbieraj metryki co 15 sekund
+  evaluation_interval: 15s   # Ewaluuj reguły co 15 sekund
+
+scrape_configs:
+  - job_name: "authz-service"
+    static_configs:
+      - targets: ["authz-service:8000"]  # Nazwa serwisu z docker-compose
+    metrics_path: "/metrics"
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]  # Prometheus monitoruje sam siebie
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []  # Zostaw puste na razie
+
+rule_files: []
